@@ -94,7 +94,8 @@ app.post('/recuperaruser', (req, res) => {
                     id: usuario.id,
                     nome: usuario.nome,
                     email: usuario.email,
-                    ano: usuario.ano
+                    sobrenome: usuario.sobrenome,
+                    funcao: usuario.funcao
                 });
 
             } else {
@@ -108,8 +109,8 @@ app.post('/recuperaruser', (req, res) => {
 app.post('/cad', (req, res) => {
     // Validações e tratamento dos dados aqui...
     // Inserir usuário no banco de dados
-    const sql = "INSERT INTO usuarios (nome, email, ano, createdAt, updatedAt) VALUES (?, ?, ?, NOW(), NOW())";
-    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.ano], (err, results) => {
+    const sql = "INSERT INTO usuarios (nome, email, sobrenome, funcao, createdAt, updatedAt) VALUES (?, ?, ?, ?, NOW(), NOW())";
+    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.sobrenome, req.body.funcao], (err, results) => {
         // Trata erros de inserção
         if (err) {
             console.error(err);
@@ -125,8 +126,8 @@ app.post('/cad', (req, res) => {
 app.post('/update', (req, res) => {
     // Validações e tratamento dos dados aqui...
     // Atualizar usuário no banco de dados
-    const sql = "UPDATE usuarios SET nome = ?, email = ? WHERE id = ?";
-    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.ano, req.body.id], (err, results) => {
+    const sql = "UPDATE usuarios SET nome = ?, email = ?, sobrenome = ?, funcao = ?, WHERE id = ?";
+    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.sobrenome, req.body.funcao, req.body.id], (err, results) => {
         // Trata erros de atualização
         if (err) {
             console.error(err);
