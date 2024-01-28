@@ -25,14 +25,14 @@
                 <td>{{funcao}}</td>
                 <td>
                     <div class="row g-1">
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-6">
                             <form action="/recuperaruser" method="post">
                                 <!-- Campo oculto para enviar o 'id' do usuário -->
                                 <input type="hidden" name="id" value="{{id}}">
                                 <button class="w-100 btn btn-info">Editar</button>
                             </form>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-6">
                             <!-- Botão que aciona um modal de confirmação para deletar -->
                             <button data-bs-toggle="modal" data-bs-target="#deleteModal_{{id}}"
                                 class="w-100 btn btn-danger">Deletar</button>
