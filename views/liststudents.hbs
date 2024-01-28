@@ -28,7 +28,7 @@
                 <td>
                     <div class="row g-1">
                         <div class="col-6 col-md-3">
-                            <form action="/recuperaruser" method="post">
+                            <form action="/recuperarstudents" method="post">
                                 <!-- Campo oculto para enviar o 'id' do usuário -->
                                 <input type="hidden" name="id" value="{{id}}">
                                 <button class="w-100 btn btn-info">Editar</button>
@@ -56,7 +56,7 @@
                             Tem certeza que quer deletar o usuário {{nome}}?
                         </div>
                         <div class="modal-footer">
-                            <form action="/del" method="post">
+                            <form action="/delstudents" method="post">
                                 <!-- Campo oculto para enviar o 'id' do usuário -->
                                 <input type="hidden" name="id" value="{{id}}">
                                 <button type="submit" class="btn btn-danger">Sim, quero deletar!</button>

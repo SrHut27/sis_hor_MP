@@ -85,9 +85,9 @@ app.get('/liststudents', (req, res) => {
         } else {
             // Renderiza a página com os resultados da consulta
             if (results.length > 0) {
-                res.render('liststudents', {NavActiveUsers: true, table: true, usuarios: results});
+                res.render('liststudents', {NavActiveListstudents: true, table: true, alunos: results});
             } else {
-                res.render('liststudents', {NavActiveUsers: true, table: false});
+                res.render('liststudents', {NavActiveListstudents: true, table: false});
             }
         }
     });
@@ -98,18 +98,18 @@ app.get('/cadstudents', (req, res) => {
     if (req.session.errors) {
         var arrayErros = req.session.errors;
         req.session.errors = "";
-        return res.render('cadstudents', {NavActiveCadstudents: true, error: arrayErros})
+        return res.render('cadstudents', {NavActiveCadstudents: true, error: arrayErros, table: false});
     }
 
     // Exibe mensagem de sucesso se a operação anterior foi bem-sucedida
     if (req.session.success) {   
         req.session.success = false;    
-        return res.render('cadstudents', {NavActiveCadstudents: true, MsgSuccess: true})
+        return res.render('cadstudents', {NavActiveCadstudents: true, MsgSuccess: true, table: false});
     }
 
     // Renderiza a página inicial
-    res.render('cadstudents', {NavActiveCadstudents: true});
-})
+    res.render('cadstudents', {NavActiveCadstudents: true, table: false});
+});
 
 // Rota para editar usuário
 app.post('/recuperaruser', (req, res) => {
@@ -124,7 +124,6 @@ app.post('/recuperaruser', (req, res) => {
             // Renderiza a página de edição com os dados do usuário
             if (results.length > 0) {
                 const usuario = results[0];
-                console.log(usuario.ano);
                 res.render('editar', {
                     error: false,
                     id: usuario.id,
@@ -191,6 +190,50 @@ app.post('/update', (req, res) => {
     });
 });
 
+app.post('/recuperarstudents', (req, res) => {
+    var id = req.body.id; // Obtém o ID do aluno do formulário
+    const sql = "SELECT * FROM alunos WHERE id = ?"; // Consulta SQL para buscar o aluno pelo ID
+    connection.query(sql, [id], (err, results) => {
+        // Trata erros na consulta
+        if (err) {
+            console.log(err);
+            res.render('editstudents', {error: true, problema: 'Não é possível editar este registro'});
+        } else {
+            // Renderiza a página de edição com os dados do aluno
+            if (results.length > 0) {
+                const aluno = results[0];
+                res.render('editstudents', {
+                    error: false,
+                    id: aluno.id,
+                    nome: aluno.nome,
+                    sobrenome: aluno.sobrenome,
+                    email: aluno.email,
+                    ano: aluno.ano,
+                    tutor: aluno.tutor
+                });
+            } else {
+                res.render('editstudents', {error: true, problema: 'Registro não encontrado'});
+            }
+        }
+    });
+});
+
+app.post('/updatestudents', (req, res) => {
+    // Validações e tratamento dos dados aqui...
+    // Atualizar usuário no banco de dados
+    const sql = "UPDATE alunos SET nome = ?,  sobrenome = ?, email = ?, ano = ?, tutor = ?  WHERE id = ?";
+    connection.query(sql, [req.body.nome, req.body.sobrenome,  req.body.email.toLowerCase(), req.body.ano, req.body.tutor, req.body.id], (err, results) => {
+        // Trata erros de atualização
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('Aluno atualizado com sucesso');
+            res.redirect('/liststudents');
+        }
+    });
+});
+
+
 // Rota para deletar usuário
 app.post('/del', (req, res) => {
     const sql = "DELETE FROM usuarios WHERE id = ?";
@@ -201,6 +244,19 @@ app.post('/del', (req, res) => {
         } else {
             console.log('Usuário deletado com sucesso');
             res.redirect('/users');
+        }
+    });
+});
+
+app.post('/delstudents', (req, res) => {
+    const sql = "DELETE FROM alunos WHERE id = ?";
+    connection.query(sql, [req.body.id], (err, results) => {
+        // Trata erros de deleção
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('Aluno deletado com sucesso');
+            res.redirect('/liststudents');
         }
     });
 });
