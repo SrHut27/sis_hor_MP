@@ -75,6 +75,42 @@ app.get('/users', (req, res) => {
     });
 });
 
+app.get('/liststudents', (req, res) => {
+    const sql = "SELECT * FROM alunos"; // Consulta SQL para selecionar todos os usuários
+    connection.query(sql, (err, results) => {
+        // Trata erros na consulta
+        if (err) {
+            console.log(`Houve um problema: ${err}`);
+            res.render('liststudents', {NavActiveUsers: true, table: false});
+        } else {
+            // Renderiza a página com os resultados da consulta
+            if (results.length > 0) {
+                res.render('liststudents', {NavActiveUsers: true, table: true, usuarios: results});
+            } else {
+                res.render('liststudents', {NavActiveUsers: true, table: false});
+            }
+        }
+    });
+});
+
+app.get('/cadstudents', (req, res) => {
+    // Verifica se há erros na sessão e os exibe
+    if (req.session.errors) {
+        var arrayErros = req.session.errors;
+        req.session.errors = "";
+        return res.render('cadstudents', {NavActiveCadstudents: true, error: arrayErros})
+    }
+
+    // Exibe mensagem de sucesso se a operação anterior foi bem-sucedida
+    if (req.session.success) {   
+        req.session.success = false;    
+        return res.render('cadstudents', {NavActiveCadstudents: true, MsgSuccess: true})
+    }
+
+    // Renderiza a página inicial
+    res.render('cadstudents', {NavActiveCadstudents: true});
+})
+
 // Rota para editar usuário
 app.post('/recuperaruser', (req, res) => {
     var id = req.body.id; // Obtém o ID do usuário do formulário
@@ -118,6 +154,23 @@ app.post('/cad', (req, res) => {
             console.log('Usuário inserido com sucesso');
             req.session.success = true;
             res.redirect('/');
+        }
+    });
+});
+
+//Método post para o cadastro de usuários
+app.post('/cadstudents', (req, res) => {
+    // Validações e tratamento dos dados aqui...
+    // Inserir usuário no banco de dados
+    const sql = "INSERT INTO alunos (nome, sobrenome, email, ano, tutor, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
+    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.sobrenome, req.body.ano, req.body.tutor], (err, results) => {
+        // Trata erros de inserção
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('Aluno inserido com sucesso');
+            req.session.success = true;
+            res.redirect('/cadstudents');
         }
     });
 });
