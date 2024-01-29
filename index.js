@@ -86,13 +86,32 @@ app.get('/liststudents', (req, res) => {
         // Trata erros na consulta
         if (err) {
             console.log(`Houve um problema: ${err}`);
-            res.render('liststudents', {NavActiveUsers: true, table: false});
+            res.render('liststudents', {NavActiveListstudents: true, table: false});
         } else {
             // Renderiza a página com os resultados da consulta
             if (results.length > 0) {
                 res.render('liststudents', {NavActiveListstudents: true, table: true, alunos: results});
             } else {
                 res.render('liststudents', {NavActiveListstudents: true, table: false});
+            }
+        }
+    });
+});
+
+
+app.get('/listclass', (req, res) => {
+    const sql = "SELECT name, ano FROM alunos"; // Consulta SQL para selecionar todos os usuários
+    connection.query(sql, (err, results) => {
+        // Trata erros na consulta
+        if (err) {
+            console.log(`Houve um problema: ${err}`);
+            res.render('listclass', {NavActiveListclass: true, table: false});
+        } else {
+            // Renderiza a página com os resultados da consulta
+            if (results.length > 0) {
+                res.render('listclass', {NavActiveListclass: true, table: true, alunos: results});
+            } else {
+                res.render('listclass', {NavActiveListclass: true, table: false});
             }
         }
     });
