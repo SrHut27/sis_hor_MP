@@ -10,17 +10,18 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+    <li class="nav-item"><a href="/" class="nav-link {{#if NavActiveIndex }} active {{/if}}"> Horário </a></li>
     <li class="nav-item"><a href="/system" class="nav-link {{#if NavActiveSystem}} active {{/if}}">Consultar sistema </a></li>
-    <li class="nav-item"><a href="/users" class="nav-link {{#if NavActiveUsers}} active {{/if}}">Listar Usuários</a></li>
-    <li class="nav-item"><a href="/listclass" class="nav-link {{#if NavActiveUsers}} active {{/if}}">Listar Turmas</a></li>
-    <li class="nav-item"><a href="/liststudents" class="nav-link {{#if NavActiveListclass}} active {{/if}}" aria-current="page">Listar Alunos</a></li>
+    <li class="nav-item"><a href="/users" class="nav-link {{#if NavActiveUsers}} active {{/if}}">Listar Funcionários</a></li>
+    <li class="nav-item"><a href="/listclass" class="nav-link {{#if NavActiveListclass}} active {{/if}}">Listar Turmas</a></li>
+    <li class="nav-item"><a href="/liststudents" class="nav-link {{#if NavActiveListstudents}} active {{/if}}" aria-current="page">Listar Alunos</a></li>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Cadastro
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a href="/" class="dropdown-item {{#if NavActiveCad}} active {{/if}}">Cadastrar Função</a>
+        <a href="/cad" class="dropdown-item {{#if NavActiveCad}} active {{/if}}">Cadastrar Funcionário</a>
         <a href="/cadstudents" class="dropdown-item {{#if NavActiveCadstudents}} active {{/if}}">Cadastrar Alunos</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#">Something else here</a>

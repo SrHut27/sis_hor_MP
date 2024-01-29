@@ -37,23 +37,38 @@ app.use(session({ // Configurações da sessão
     resave: false, // Evita salvar a sessão se não houver mudanças
     saveUninitialized: true // Salva sessões novas e não inicializadas
 }))
-
-
-// Rota para a página Cadastrar
+//Rota para rota inicial
 app.get('/', (req, res) => {
     // Verifica se há erros na sessão e os exibe
     if (req.session.errors) {
         var arrayErros = req.session.errors;
         req.session.errors = "";
-        return res.render('index', {NavActiveCad: true, error: arrayErros})
+        return res.render('index', {NavActiveIndex: true, error: arrayErros})
     }
     // Exibe mensagem de sucesso se a operação anterior foi bem-sucedida
     if (req.session.success) {   
         req.session.success = false;    
-        return res.render('index', {NavActiveCad: true, MsgSuccess: true})
+        return res.render('index', {NavActiveIndex: true, MsgSuccess: true})
     }   
     // Renderiza a página inicial
-    res.render('index', {NavActiveCad: true});
+    res.render('index', {NavActiveIndex: true});
+})
+
+// Rota para a página Cadastrar
+app.get('/cad', (req, res) => {
+    // Verifica se há erros na sessão e os exibe
+    if (req.session.errors) {
+        var arrayErros = req.session.errors;
+        req.session.errors = "";
+        return res.render('cad', {NavActiveCad: true, error: arrayErros})
+    }
+    // Exibe mensagem de sucesso se a operação anterior foi bem-sucedida
+    if (req.session.success) {   
+        req.session.success = false;    
+        return res.render('cad', {NavActiveCad: true, MsgSuccess: true})
+    }   
+    // Renderiza a página inicial
+    res.render('cad', {NavActiveCad: true});
 })
 
 //Rota do sistema de horários
@@ -63,7 +78,7 @@ res.render('system', {NavActiveSystem: true})});
 
 // Rota para listar usuários
 app.get('/users', (req, res) => {
-    const sql = "SELECT * FROM usuarios"; // Consulta SQL para selecionar todos os usuários
+    const sql = "SELECT * FROM user_func"; // Consulta SQL para selecionar todos os usuários
     connection.query(sql, (err, results) => {
         // Trata erros na consulta
         if (err) {
@@ -100,7 +115,7 @@ app.get('/liststudents', (req, res) => {
 
 
 app.get('/listclass', (req, res) => {
-    const sql = "SELECT name, ano FROM alunos"; // Consulta SQL para selecionar todos os usuários
+    const sql = "SELECT  ano, tutor FROM alunos"; // Consulta SQL para selecionar todos os usuários
     connection.query(sql, (err, results) => {
         // Trata erros na consulta
         if (err) {
@@ -138,7 +153,7 @@ app.get('/cadstudents', (req, res) => {
 // Rota para editar usuário
 app.post('/recuperaruser', (req, res) => {
     var id = req.body.id; // Obtém o ID do usuário do formulário
-    const sql = "SELECT * FROM usuarios WHERE id = ?"; // Consulta SQL para buscar o usuário pelo ID
+    const sql = "SELECT * FROM user_func WHERE id = ?"; // Consulta SQL para buscar o usuário pelo ID
     connection.query(sql, [id], (err, results) => {
         // Trata erros na consulta
         if (err) {
@@ -168,7 +183,7 @@ app.post('/recuperaruser', (req, res) => {
 app.post('/cad', (req, res) => {
     // Validações e tratamento dos dados aqui...
     // Inserir usuário no banco de dados
-    const sql = "INSERT INTO usuarios (nome, email, funcao, createdAt, updatedAt) VALUES (?, ?, ?, NOW(), NOW())";
+    const sql = "INSERT INTO user_func (nome, email, funcao, createdAt, updatedAt) VALUES (?, ?, ?, NOW(), NOW())";
     connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.funcao], (err, results) => {
         // Trata erros de inserção
         if (err) {
@@ -176,7 +191,7 @@ app.post('/cad', (req, res) => {
         } else {
             console.log('Usuário inserido com sucesso');
             req.session.success = true;
-            res.redirect('/');
+            res.redirect('/cad');
         }
     });
 });
@@ -202,7 +217,7 @@ app.post('/cadstudents', (req, res) => {
 app.post('/update', (req, res) => {
     // Validações e tratamento dos dados aqui...
     // Atualizar usuário no banco de dados
-    const sql = "UPDATE usuarios SET nome = ?, email = ?, funcao = ? WHERE id = ?";
+    const sql = "UPDATE user_func SET nome = ?, email = ?, funcao = ? WHERE id = ?";
     connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.funcao, req.body.id], (err, results) => {
         // Trata erros de atualização
         if (err) {
@@ -260,7 +275,7 @@ app.post('/updatestudents', (req, res) => {
 
 // Rota para deletar usuário
 app.post('/del', (req, res) => {
-    const sql = "DELETE FROM usuarios WHERE id = ?";
+    const sql = "DELETE FROM user_func WHERE id = ?";
     connection.query(sql, [req.body.id], (err, results) => {
         // Trata erros de deleção
         if (err) {

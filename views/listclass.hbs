@@ -1,14 +1,10 @@
-<div class="p-5 rounded mt-3">
+<div class="p-2 rounded mt-5">
     <h1>Listar Turmas</h1>
     <!-- A condicional 'if' verifica se a variável 'table' é verdadeira (ou seja, se há dados para exibir) -->
     {{#if table}}
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">#ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Sobrenome</th>
-                <th scope="col">E-mail</th>
                 <th scope="col">Ano</th>
                 <th scope="col">Tutor</th>
                 <th scope="col">Ações</th>
@@ -19,54 +15,19 @@
             {{#each alunos}}
             <tr>
                 <!-- Exibe o ID, nome e e-mail do usuário usando '{{nomeDoCampo}}' para inserir os valores -->
-                <th scope="row">{{id}}</th>
-                <td>{{nome}}</td>
-                <td>{{sobrenome}}</td>
-                <td>{{email}}</td>
                 <td>{{ano}}</td>
                 <td>{{tutor}}</td>
                 <td>
-                    <div class="row g-1">
-                        <div class="col-6 col-md-6">
-                            <form action="/recuperarstudents" method="post">
-                                <!-- Campo oculto para enviar o 'id' do usuário -->
-                                <input type="hidden" name="id" value="{{id}}">
-                                <button class="w-100 btn btn-info">Editar</button>
-                            </form>
-                        </div>
-                        <div class="col-6 col-md-6">
-                            <!-- Botão que aciona um modal de confirmação para deletar -->
-                            <button data-bs-toggle="modal" data-bs-target="#deleteModal_{{id}}"
-                                class="w-100 btn btn-danger">Deletar</button>
+                    <div class="row g-3">
+                        <div class="col-6 col-md-5">
+                            <!-- Botão que lista todos os alunos de determinada sala -->
+                            <button class="w-100 btn btn-primary">Verificar todos os componentes da turma</button>
                         </div>
                     </div>
                 </td>
             </tr>
             <!-- Modal de confirmação de exclusão -->
-            <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">CONFIRMAÇÃO</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body fw-bold text-danger">
-                            <!-- Pergunta de confirmação usando o nome do usuário -->
-                            Tem certeza que quer deletar o usuário {{nome}}?
-                        </div>
-                        <div class="modal-footer">
-                            <form action="/delstudents" method="post">
-                                <!-- Campo oculto para enviar o 'id' do usuário -->
-                                <input type="hidden" name="id" value="{{id}}">
-                                <button type="submit" class="btn btn-danger">Sim, quero deletar!</button>
-                            </form>
-                            <!-- Botão para cancelar a ação -->
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             {{/each}}
         </tbody>
     </table>

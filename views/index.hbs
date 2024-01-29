@@ -1,39 +1,50 @@
-<div class="bg-light p-5 rounded mt-3">
-    <h1>Cadastrar Usuários do Sistema</h1>
-    {{>_msg}}
-    <form action="/cad" method="post">
-        <div class="row mt-5">
-            <div class="col-md-5 mb-3">
-                <label for="nome" class="form-label">Nome Completo</label>
-                <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required>
-            </div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Horário/Dia</th>
+      <th scope="col">Segunda-Feira</th>
+      <th scope="col">Terça-Feira</th>
+      <th scope="col">Quarta-Feira</th>
+      <th scope="col">Quinta-Feira</th>
+      <th scope="col">Sexta-Feira</th>
+    </tr>
+  </thead>
+  <tbody>
 
-            <div class="col-md-5 mb-3">
-                <label for="email" class="form-label">Endereço de e-mail</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu email"
-                    required>
-            </div>
+    <tr>
+      <th scope="row">8h00</th>
 
-            <div class="col-md-5 mb-3" style="margin-top:2.3%;" >
-            <div class="input-group mb-3">
-            <select class="custom-select" id="inputGroupSelect02" name="funcao">
-            <option value="0" disabled>Selecionar função</option>
-            <option value="Administrador">Administrador/a</option>
-            <option value="Coordenador">Coordenador/a</option>
-            <option value="Tutor">Tutor/a</option>
-            <option value="Professor">Professor/a</option>
-            </select>
-            <div class="input-group-append">
-            <label class="input-group-text" for="inputGroupSelect02">Selecione a função de tal usuário no sistema</label>
-            </div>
-            </div>
-            </div>
+    </tr>
 
-            <div class="col-md-5">
-                <button class="mt-4 p-2 w-100 btn btn-success">Cadastrar</button>
-            </div>
-        </div>
-    </form>
-    <br>
+    <tr>
+      <th scope="row">8h50</th>
 
-</div>
+    </tr>
+
+    <tr>
+      <th scope="row">9h40</th>
+
+    </tr>
+
+    <tr>
+      <th class="table-danger" scope="row">10h30</th>
+
+    </tr>
+
+    <tr>
+      <th scope="row">10h50</th>
+
+    </tr>
+
+    <tr>
+      <th scope="row">11h40</th>
+
+    </tr>
+
+    <tr>
+      <th class="table-danger" scope="row">12h10</th>
+
+    </tr>
+
+  </tbody>
+</table>
