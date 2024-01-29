@@ -3,14 +3,14 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     
     <!-- Image and text -->
-    <a class="navbar-brand" href="#">
-    <img src="C:/programacao/inicio_sistdehorarios-main/CRUD-main/CRUD-main/public/css/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-    Sistema de Horários
-     </a>
+    <a class="navbar-brand" href="https://mariaperegrina.org.br" target="_blank">
+    <img src="icons/logo.png" width="100" height="100" class="d-inline-block align-top" alt="Logo da Escola Maria Peregrina">
+    </a>
     
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+    <li class="nav-item"><a href="/system" class="nav-link {{#if NavActiveSystem}} active {{/if}}">Consultar sistema </a></li>
     <li class="nav-item"><a href="/users" class="nav-link {{#if NavActiveUsers}} active {{/if}}">Listar Usuários</a></li>
     <li class="nav-item"><a href="/liststudents" class="nav-link {{#if NavActiveListstudents}} active {{/if}}" aria-current="page">Listar Alunos</a></li>
 
@@ -20,7 +20,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a href="/" class="dropdown-item {{#if NavActiveCad}} active {{/if}}">Cadastrar Função</a>
-        <a href="/cadstudents" class="dropdown-item {{#if NavActiveCadstudents}} active {{/if}}">Cadastrar Estudantes</a>
+        <a href="/cadstudents" class="dropdown-item {{#if NavActiveCadstudents}} active {{/if}}">Cadastrar Alunos</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#">Something else here</a>
         </div>

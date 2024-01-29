@@ -27,7 +27,7 @@ app.engine('hbs', hbs.engine({
     defaultLayout: 'main' // Define o layout padrão
 })); 
 app.set('view engine', 'hbs'); // Define o Handlebars como o motor de renderização de templates
-app.use(express.static("images"));
+app.use(express.static("public")); //Permite o uso de imagens
 
 // Middlewares
 app.use(express.static('public')); // Serve arquivos estáticos da pasta 'public'
@@ -47,16 +47,19 @@ app.get('/', (req, res) => {
         req.session.errors = "";
         return res.render('index', {NavActiveCad: true, error: arrayErros})
     }
-
     // Exibe mensagem de sucesso se a operação anterior foi bem-sucedida
     if (req.session.success) {   
         req.session.success = false;    
         return res.render('index', {NavActiveCad: true, MsgSuccess: true})
-    }
-
+    }   
     // Renderiza a página inicial
     res.render('index', {NavActiveCad: true});
 })
+
+//Rota do sistema de horários
+app.get('/system', (req, res) => {
+res.render('system', {NavActiveSystem: true})});
+
 
 // Rota para listar usuários
 app.get('/users', (req, res) => {
