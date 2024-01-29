@@ -20,9 +20,10 @@
                     required>
             </div>
 
-            <div class="col-md-5 mb-3">
-                <select id="ano" name="ano" class="select form-control-lg">
-                <option value="0" disabled>Selecione em que ano o aluno está</option>
+            <div class="col-md-5 mb-3" id="selectfuncao" style="#selectfuncao{margin-top:5%;}" >
+            <div class="input-group mb-3">
+            <select class="custom-select" id="inputGroupSelect02" name="ano">
+            <option value="0" disabled>Selecionar o ano do aluno</option>
                 <option value="1º">1º/a</option>
                 <option value="2º">2º</option>
                 <option value="3º">3º</option>
@@ -34,9 +35,12 @@
                 <option value="9º">9º</option>
                 <option value="1ºEM">1ºEM</option>
                 <option value="2ºEM">2ºEM</option>
-                <option value="3ºEM">3ºEM</option>    
-                </select>
-                <label class="form-label select-label">Selecionar o Ano que o aluno estuda</label>
+                <option value="3ºEM">3ºEM</option>  
+            </select>
+            <div class="input-group-append">
+            <label class="input-group-text" for="inputGroupSelect02">Ano do Aluno</label>
+            </div>
+            </div>
             </div>
 
             <div class="col-md-5 mb-3">

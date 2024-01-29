@@ -1,11 +1,32 @@
 <header class="d-flex justify-content-center py-3">
-    <ul class="nav nav-pills">
-        <li class="nav-item"><a href="/" class="nav-link {{#if NavActiveCad}} active {{/if}} "
-                aria-current="page">Cadastrar Função</a></li>
-        <li class="nav-item"><a href="/users" class="nav-link {{#if NavActiveUsers}} active {{/if}}">Listar Usuários</a>
-        <li class="nav-item"><a href="/cadstudents" class="nav-link {{#if NavActiveCadstudents}} active {{/if}}">Cadastrar Estudantes</a>
-        <li class="nav-item"><a href="/liststudents" class="nav-link {{#if NavActiveListstudents}} active {{/if}}">Listar Alunos</a>
-        </li>
+   
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    
+    <!-- Image and text -->
+    <a class="navbar-brand" href="#">
+    <img src="C:/programacao/inicio_sistdehorarios-main/CRUD-main/CRUD-main/public/css/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    Sistema de Horários
+     </a>
+    
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    <li class="nav-item"><a href="/users" class="nav-link {{#if NavActiveUsers}} active {{/if}}">Listar Usuários</a></li>
+    <li class="nav-item"><a href="/liststudents" class="nav-link {{#if NavActiveListstudents}} active {{/if}}" aria-current="page">Listar Alunos</a></li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Cadastro
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a href="/" class="dropdown-item {{#if NavActiveCad}} active {{/if}}">Cadastrar Função</a>
+        <a href="/cadstudents" class="dropdown-item {{#if NavActiveCadstudents}} active {{/if}}">Cadastrar Estudantes</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+        
+      </li>
+    
     </ul>
+    
 </header>

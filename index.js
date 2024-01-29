@@ -27,6 +27,7 @@ app.engine('hbs', hbs.engine({
     defaultLayout: 'main' // Define o layout padrão
 })); 
 app.set('view engine', 'hbs'); // Define o Handlebars como o motor de renderização de templates
+app.use(express.static("images"));
 
 // Middlewares
 app.use(express.static('public')); // Serve arquivos estáticos da pasta 'public'
@@ -36,6 +37,7 @@ app.use(session({ // Configurações da sessão
     resave: false, // Evita salvar a sessão se não houver mudanças
     saveUninitialized: true // Salva sessões novas e não inicializadas
 }))
+
 
 // Rota para a página Cadastrar
 app.get('/', (req, res) => {
@@ -144,8 +146,8 @@ app.post('/recuperaruser', (req, res) => {
 app.post('/cad', (req, res) => {
     // Validações e tratamento dos dados aqui...
     // Inserir usuário no banco de dados
-    const sql = "INSERT INTO usuarios (nome, email, sobrenome, funcao, createdAt, updatedAt) VALUES (?, ?, ?, ?, NOW(), NOW())";
-    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.sobrenome, req.body.funcao], (err, results) => {
+    const sql = "INSERT INTO usuarios (nome, email, funcao, createdAt, updatedAt) VALUES (?, ?, ?, NOW(), NOW())";
+    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.funcao], (err, results) => {
         // Trata erros de inserção
         if (err) {
             console.error(err);
@@ -178,8 +180,8 @@ app.post('/cadstudents', (req, res) => {
 app.post('/update', (req, res) => {
     // Validações e tratamento dos dados aqui...
     // Atualizar usuário no banco de dados
-    const sql = "UPDATE usuarios SET nome = ?, email = ?, sobrenome = ?, funcao = ?, WHERE id = ?";
-    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.sobrenome, req.body.funcao, req.body.id], (err, results) => {
+    const sql = "UPDATE usuarios SET nome = ?, email = ?, funcao = ? WHERE id = ?";
+    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.funcao, req.body.id], (err, results) => {
         // Trata erros de atualização
         if (err) {
             console.error(err);
