@@ -3,9 +3,11 @@
     {{>_msg}}
     <form action="/cad" method="post">
         <div class="row mt-5">
+
             <div class="col-md-5 mb-3">
                 <label for="nome" class="form-label">Nome Completo</label>
-                <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required>
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" 
+                    required>
             </div>
 
             <div class="col-md-5 mb-3">
@@ -13,10 +15,10 @@
                 <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu email"
                     required>
             </div>
-
+    
             <div class="col-md-5 mb-3" style="margin-top:2.3%;" >
             <div class="input-group mb-3">
-            <select class="custom-select" id="inputGroupSelect02" name="funcao">
+            <select class="custom-select" id="tipo" name="tipo">
             <option value="0" disabled>Selecionar função</option>
             <option value="Administrador">Administrador/a</option>
             <option value="Coordenador">Coordenador/a</option>

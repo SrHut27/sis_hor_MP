@@ -5,18 +5,18 @@
         <div class="row mt-5">
             <div class="col-md-5 mb-3">
                 <label for="nome" class="form-label">Nome Completo</label>
-                <input type="hidden" value="{{id}}" name="id">
-                <input value="{{nome}}" type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required>
+                <input type="hidden" value="{{id_usuario}}" name="id">
+                <input value="{{nome_usuario}}" type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required>
             </div>
             <div class="col-md-5 mb-3">
                 <label for="email" class="form-label">Endereço de e-mail</label>
-                <input value="{{email}}" type="email" class="form-control" id="email" name="email" placeholder="Digite seu email" required>
+                <input value="{{email_usuario}}" type="email" class="form-control" id="email" name="email" placeholder="Digite seu email" required>
             </div>
             <div class="col-md-5 mb-3">
                 <label class="form-label">Função</label>
                 <div class="input-group">
-                    <select class="custom-select" id="funcao" name="funcao">
-                        <option value="{{funcao}}" disabled>Selecionar tipo</option>
+                    <select class="custom-select" id="funcao" name="nome_tipo_usuario">
+                        <option value="{{nome_tipo_usuario}}" disabled>Selecionar tipo</option>
                         <option value="Administrador">Administrador/a</option>
                         <option value="Coordenador">Coordenador/a</option>
                         <option value="Tutor">Tutor/a</option>

@@ -175,3 +175,21 @@ INSERT INTO tb_agenda_aluno (id_agenda, id_aluno) VALUES (4, 2);
 INSERT INTO tb_agenda_aluno (id_agenda, id_aluno) VALUES (5, 2);
 INSERT INTO tb_agenda_aluno (id_agenda, id_aluno) VALUES (6, 2);
 
+
+-- Tabela de Materias
+
+CREATE TABLE tb_materia (
+    id_materia INT AUTO_INCREMENT PRIMARY KEY,
+    nome_materia VARCHAR(255) NOT NULL
+);
+-- Inserts for Subjects
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('Matemática');
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('Português');
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('Ciências');
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('História');
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('Geografia');
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('Inglês');
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('Artes');
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('Educação Física');
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('Química');
+INSERT INTO `db_teste`.`tb_materia` (`nome_materia`) VALUES ('Física');

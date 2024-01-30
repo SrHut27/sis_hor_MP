@@ -7,10 +7,7 @@
             <tr>
                 <th scope="col">#ID</th>
                 <th scope="col">Nome</th>
-                <th scope="col">Sobrenome</th>
                 <th scope="col">E-mail</th>
-                <th scope="col">Ano</th>
-                <th scope="col">Tutor</th>
                 <th scope="col">Ações</th>
             </tr>
         </thead>
@@ -19,31 +16,28 @@
             {{#each alunos}}
             <tr>
                 <!-- Exibe o ID, nome e e-mail do usuário usando '{{nomeDoCampo}}' para inserir os valores -->
-                <th scope="row">{{id}}</th>
-                <td>{{nome}}</td>
-                <td>{{email}}</td>
-                <td>{{sobrenome}}</td>
-                <td>{{ano}}</td>
-                <td>{{tutor}}</td>
+                <th scope="row">{{id_aluno}}</th>
+                <td>{{nome_aluno}}</td>
+                <td>{{email_aluno}}</td>
                 <td>
                     <div class="row g-1">
                         <div class="col-6 col-md-6">
                             <form action="/recuperarstudents" method="post">
                                 <!-- Campo oculto para enviar o 'id' do usuário -->
-                                <input type="hidden" name="id" value="{{id}}">
+                                <input type="hidden" name="id" value="{{id_aluno}}">
                                 <button class="w-100 btn btn-info">Editar</button>
                             </form>
                         </div>
                         <div class="col-6 col-md-6">
                             <!-- Botão que aciona um modal de confirmação para deletar -->
-                            <button data-bs-toggle="modal" data-bs-target="#deleteModal_{{id}}"
+                            <button data-bs-toggle="modal" data-bs-target="#deleteModal_{{id_aluno}}"
                                 class="w-100 btn btn-danger">Deletar</button>
                         </div>
                     </div>
                 </td>
             </tr>
             <!-- Modal de confirmação de exclusão -->
-            <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="deleteModal_{{id_aluno}}" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -53,12 +47,12 @@
                         </div>
                         <div class="modal-body fw-bold text-danger">
                             <!-- Pergunta de confirmação usando o nome do usuário -->
-                            Tem certeza que quer deletar o usuário {{nome}}?
+                            Tem certeza que quer deletar o usuário {{nome_aluno}}?
                         </div>
                         <div class="modal-footer">
                             <form action="/delstudents" method="post">
                                 <!-- Campo oculto para enviar o 'id' do usuário -->
-                                <input type="hidden" name="id" value="{{id}}">
+                                <input type="hidden" name="id" value="{{id_aluno}}">
                                 <button type="submit" class="btn btn-danger">Sim, quero deletar!</button>
                             </form>
                             <!-- Botão para cancelar a ação -->

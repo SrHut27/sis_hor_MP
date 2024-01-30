@@ -17,16 +17,16 @@
             {{#each usuarios}}
             <tr>
                 <!-- Exibe o ID, nome e e-mail do usuário usando '{{nomeDoCampo}}' para inserir os valores -->
-                <th scope="row">{{id}}</th>
-                <td>{{nome}}</td>
-                <td>{{email}}</td>
-                <td>{{funcao}}</td>
+                <th scope="row">{{id_usuario}}</th>
+                <td>{{nome_usuario}}</td>
+                <td>{{email_usuario}}</td>
+                <td>{{nome_tipo_usuario}}</td>
                 <td>
                     <div class="row g-1">
                         <div class="col-6 col-md-6">
                             <form action="/recuperaruser" method="post">
                                 <!-- Campo oculto para enviar o 'id' do usuário -->
-                                <input type="hidden" name="id" value="{{id}}">
+                                <input type="hidden" name="id_usuario" value="{{id}}">
                                 <button class="w-100 btn btn-info">Editar</button>
                             </form>
                         </div>
@@ -39,7 +39,7 @@
                 </td>
             </tr>
             <!-- Modal de confirmação de exclusão -->
-            <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="deleteModal_{{id_usuario}}" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -49,7 +49,7 @@
                         </div>
                         <div class="modal-body fw-bold text-danger">
                             <!-- Pergunta de confirmação usando o nome do usuário -->
-                            Tem certeza que quer deletar o usuário {{nome}}?
+                            Tem certeza que quer deletar o usuário {{nome_usuario}}?
                         </div>
                         <div class="modal-footer">
                             <form action="/del" method="post">

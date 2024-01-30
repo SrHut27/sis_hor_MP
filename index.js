@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
     host: '127.0.0.1', // Endereço do servidor do banco de dados
     user: 'root', // Usuário do banco de dados
     password: '', // Senha do banco de dados
-    database: 'db_sdh' // Nome do banco de dados
+    database: 'db_shn' // Nome do banco de dados
 });
 
 // Conectando ao banco de dados
@@ -37,6 +37,8 @@ app.use(session({ // Configurações da sessão
     resave: false, // Evita salvar a sessão se não houver mudanças
     saveUninitialized: true // Salva sessões novas e não inicializadas
 }))
+
+
 //Rota para rota inicial
 app.get('/', (req, res) => {
     // Verifica se há erros na sessão e os exibe
@@ -78,7 +80,7 @@ res.render('system', {NavActiveSystem: true})});
 
 // Rota para listar usuários
 app.get('/users', (req, res) => {
-    const sql = "SELECT * FROM user_func"; // Consulta SQL para selecionar todos os usuários
+    const sql = "SELECT * FROM tb_usuario"; // Consulta SQL para selecionar todos os usuários
     connection.query(sql, (err, results) => {
         // Trata erros na consulta
         if (err) {
@@ -95,8 +97,9 @@ app.get('/users', (req, res) => {
     });
 });
 
+//Rota para listar alunos
 app.get('/liststudents', (req, res) => {
-    const sql = "SELECT * FROM alunos"; // Consulta SQL para selecionar todos os usuários
+    const sql = "SELECT * FROM tb_aluno"; // Consulta SQL para selecionar todos os usuários
     connection.query(sql, (err, results) => {
         // Trata erros na consulta
         if (err) {
@@ -113,9 +116,9 @@ app.get('/liststudents', (req, res) => {
     });
 });
 
-
+//Rota ara listar turmas
 app.get('/listclass', (req, res) => {
-    const sql = "SELECT  ano, tutor FROM alunos"; // Consulta SQL para selecionar todos os usuários
+    const sql = "SELECT  nome_turma FROM tb_turma"; // Consulta SQL para selecionar todos os usuários
     connection.query(sql, (err, results) => {
         // Trata erros na consulta
         if (err) {
@@ -132,6 +135,7 @@ app.get('/listclass', (req, res) => {
     });
 });
 
+//Rota para cadstrar alunos
 app.get('/cadstudents', (req, res) => {
     // Verifica se há erros na sessão e os exibe
     if (req.session.errors) {
@@ -150,10 +154,11 @@ app.get('/cadstudents', (req, res) => {
     res.render('cadstudents', {NavActiveCadstudents: true, table: false});
 });
 
-// Rota para editar usuário
+
+//Rota para recuperar usuario
 app.post('/recuperaruser', (req, res) => {
     var id = req.body.id; // Obtém o ID do usuário do formulário
-    const sql = "SELECT * FROM user_func WHERE id = ?"; // Consulta SQL para buscar o usuário pelo ID
+    const sql = "SELECT * FROM tb_usuario WHERE id_usuario = ?"; // Consulta SQL para buscar o usuário pelo ID
     connection.query(sql, [id], (err, results) => {
         // Trata erros na consulta
         if (err) {
@@ -168,10 +173,8 @@ app.post('/recuperaruser', (req, res) => {
                     id: usuario.id,
                     nome: usuario.nome,
                     email: usuario.email,
-                    sobrenome: usuario.sobrenome,
-                    funcao: usuario.funcao
+                    tipo: usuario.tipo
                 });
-
             } else {
                 res.render('editar', {error: true, problema: 'Registro não encontrado'});
             }
@@ -179,15 +182,24 @@ app.post('/recuperaruser', (req, res) => {
     });
 });
 
-// Rota para cadastrar usuário
+
 app.post('/cad', (req, res) => {
     // Validações e tratamento dos dados aqui...
+    
+    // Verificar se o campo 'nome' está presente e não é nulo
+    if (!req.body.nome) {
+        res.status(400).send('O campo nome é obrigatório.');
+        return;
+    }
+
     // Inserir usuário no banco de dados
-    const sql = "INSERT INTO user_func (nome, email, funcao, createdAt, updatedAt) VALUES (?, ?, ?, NOW(), NOW())";
-    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.funcao], (err, results) => {
+    const sql = "INSERT INTO tb_usuario (nome_usuario, email_usuario, nome_tipo_usuario) VALUES (?, ?, ?)";
+
+    connection.query(sql, [req.body.nome, req.body.email, req.body.tipo], (err, results) => {
         // Trata erros de inserção
         if (err) {
             console.error(err);
+            res.status(500).send('Erro ao cadastrar usuário.');
         } else {
             console.log('Usuário inserido com sucesso');
             req.session.success = true;
@@ -196,12 +208,16 @@ app.post('/cad', (req, res) => {
     });
 });
 
-//Método post para o cadastro de usuários
+
+
+
+
+//Método post para o cadastro de alunos
 app.post('/cadstudents', (req, res) => {
     // Validações e tratamento dos dados aqui...
     // Inserir usuário no banco de dados
-    const sql = "INSERT INTO alunos (nome, sobrenome, email, ano, tutor, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
-    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.sobrenome, req.body.ano, req.body.tutor], (err, results) => {
+    const sql = "INSERT INTO tb_aluno (nome_aluno, email_aluno) VALUES (?, ?)";
+    connection.query(sql, [req.body.nome, req.body.email.toLowerCase()], (err, results) => {
         // Trata erros de inserção
         if (err) {
             console.error(err);
@@ -217,8 +233,8 @@ app.post('/cadstudents', (req, res) => {
 app.post('/update', (req, res) => {
     // Validações e tratamento dos dados aqui...
     // Atualizar usuário no banco de dados
-    const sql = "UPDATE user_func SET nome = ?, email = ?, funcao = ? WHERE id = ?";
-    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.funcao, req.body.id], (err, results) => {
+    const sql = "UPDATE tb_usuario SET nome_usuario = ?, email_usuario = ?, nome_tipo_usuario = ? WHERE id_usuario = ?";
+    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.tipo, req.body.id], (err, results) => {
         // Trata erros de atualização
         if (err) {
             console.error(err);
@@ -231,7 +247,7 @@ app.post('/update', (req, res) => {
 
 app.post('/recuperarstudents', (req, res) => {
     var id = req.body.id; // Obtém o ID do aluno do formulário
-    const sql = "SELECT * FROM alunos WHERE id = ?"; // Consulta SQL para buscar o aluno pelo ID
+    const sql = "SELECT * FROM tb_aluno WHERE id_aluno = ?"; // Consulta SQL para buscar o aluno pelo ID
     connection.query(sql, [id], (err, results) => {
         // Trata erros na consulta
         if (err) {
@@ -245,10 +261,7 @@ app.post('/recuperarstudents', (req, res) => {
                     error: false,
                     id: aluno.id,
                     nome: aluno.nome,
-                    sobrenome: aluno.sobrenome,
                     email: aluno.email,
-                    ano: aluno.ano,
-                    tutor: aluno.tutor
                 });
             } else {
                 res.render('editstudents', {error: true, problema: 'Registro não encontrado'});
@@ -260,8 +273,8 @@ app.post('/recuperarstudents', (req, res) => {
 app.post('/updatestudents', (req, res) => {
     // Validações e tratamento dos dados aqui...
     // Atualizar usuário no banco de dados
-    const sql = "UPDATE alunos SET nome = ?,  sobrenome = ?, email = ?, ano = ?, tutor = ?  WHERE id = ?";
-    connection.query(sql, [req.body.nome, req.body.sobrenome,  req.body.email.toLowerCase(), req.body.ano, req.body.tutor, req.body.id], (err, results) => {
+    const sql = "UPDATE tb_aluno SET nome_aluno = ?, email_aluno = ?  WHERE id_aluno = ?";
+    connection.query(sql, [req.body.nome, req.body.email.toLowerCase(), req.body.id], (err, results) => {
         // Trata erros de atualização
         if (err) {
             console.error(err);
@@ -275,7 +288,7 @@ app.post('/updatestudents', (req, res) => {
 
 // Rota para deletar usuário
 app.post('/del', (req, res) => {
-    const sql = "DELETE FROM user_func WHERE id = ?";
+    const sql = "DELETE FROM tb_usuario WHERE id_usuario = ?";
     connection.query(sql, [req.body.id], (err, results) => {
         // Trata erros de deleção
         if (err) {
@@ -287,8 +300,9 @@ app.post('/del', (req, res) => {
     });
 });
 
+
 app.post('/delstudents', (req, res) => {
-    const sql = "DELETE FROM alunos WHERE id = ?";
+    const sql = "DELETE FROM tb_aluno WHERE id_aluno = ?";
     connection.query(sql, [req.body.id], (err, results) => {
         // Trata erros de deleção
         if (err) {
@@ -304,3 +318,4 @@ app.post('/delstudents', (req, res) => {
 app.listen(PORT, () => {
     console.log('Servidor rodando em http://localhost:' + PORT);
 });
+
